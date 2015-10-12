@@ -32,20 +32,33 @@ function restore_blocks() {
 }
 
 /**
+* Save Arduino generated code to local file.
+*/
+function saveCode() {
+  var fileName = window.prompt('What would you like to name your file?', 'BlocklyDuino')
+  //doesn't save if the user quits the save prompt
+  if(fileName){
+    var blob = new Blob([Blockly.Arduino.workspaceToCode()], {type: 'text/plain;charset=utf-8'});
+    saveAs(blob, fileName + '.ino');
+  }
+}
+
+/**
  * Save blocks to local file.
  * better include Blob and FileSaver for browser compatibility
  */
 function save() {
   var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
   var data = Blockly.Xml.domToText(xml);
-
+  var fileName = window.prompt('What would you like to name your file?', 'BlocklyDuino');
   // Store data in blob.
   // var builder = new BlobBuilder();
   // builder.append(data);
   // saveAs(builder.getBlob('text/plain;charset=utf-8'), 'blockduino.xml');
-  console.log("saving blob");
-  var blob = new Blob([data], {type: 'text/xml'});
-  saveAs(blob, 'blockduino.xml');
+  if(fileName){
+    var blob = new Blob([data], {type: 'text/xml'});
+    saveAs(blob, fileName + ".xml");
+  } 
 }
 
 /**
@@ -235,9 +248,9 @@ function uploadCode(code, callback) {
 }
 
 function uploadClick() {
-    var code = document.getElementById('textarea_arduino').value;
+    var code = document.getElementById('content_arduino').value;
 
-    alert("Ready to upload to Arduino.\n\nNote: this only works on Mac OS X and Linux at this time.");
+    alert("Ready to upload to Arduino.");
     
     uploadCode(code, function(status, errorInfo) {
         if (status == 200) {
@@ -256,62 +269,4 @@ function resetClick() {
             alert("Error resetting program: " + errorInfo);
         }
     });
-}
-
-
-function renderBlocks() {
-  var container = '';
-  for (var i = 0, len = BLOCKS.length; i < len; i++) {
-    var itemStart = '';
-    var itemEnd = '</category>';
-    var item = BLOCKS[i];
-    if ('category' in item) {
-      var passFlag = false;
-      if ('name' in item.category) {
-        itemStart += '<category name="' + item.category.name + '"';
-        if ('custom' in item.category) {
-          itemStart += ' custom="' + item.category.custom + '"';
-          passFlag = true;
-        }
-        itemStart += '>';
-        if ('blocks' in item.category) {
-          for (var j = 0, jlen = item.category.blocks.length; j < jlen; j++) {
-            if ('controls_for' !== item.category.blocks[j]) {
-              itemStart += '<block type="' + item.category.blocks[j] + '">';
-            } else { // wildcard
-              itemStart += '<block type="controls_for">' +
-                '<value name="FROM">' +
-                  '<block type="math_number">' +
-                    '<field name="NUM">1</field>' +
-                  '</block>' +
-                '</value>' +
-                '<value name="TO">' +
-                  '<block type="math_number">' +
-                    '<field name="NUM">10</field>' +
-                  '</block>' +
-                '</value>';
-            }
-            itemStart += '</block>';
-          }
-        } else {
-          if (!passFlag) {
-            alert("Broken BLOCK block syntax in config.js");
-          }
-        }
-      } else {
-        alert("Broken BLOCK category syntax in config.js");
-      }
-      itemStart += itemEnd;
-    }
-    if ('sep' in item) {
-      if (item.sep) {
-        itemStart += '<sep></sep>';
-      }
-    }
-//    console.log(itemStart);
-//    var xml = Blockly.Xml.textToDom(itemStart);
-//    container.appendChild(xml);
-    container += itemStart;
-  }
-  return '<xml>' + container + '</xml>';
 }
