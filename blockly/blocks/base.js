@@ -227,3 +227,55 @@ Blockly.Blocks['serial_print'] = {
     this.setTooltip('Prints data to the console/serial port as human-readable ASCII text.');
   }
 };
+
+Blockly.Blocks['lcd_print'] = {
+  init: function() {
+    this.setColour (257);
+    //generates array needed for columns
+    var columns = [];
+    for(var i = 0; i < 16;i++){
+      columns.push([(i + 1).toString(), i.toString()]);
+    }
+    //
+    this.appendDummyInput("")
+      .appendField("LCD Print")
+      .appendField("RS PIN#")
+      .appendField(new Blockly.FieldDropdown(profile.default.digital), "RS_PIN")
+      .appendField("ENABLE PIN#")
+      .appendField(new Blockly.FieldDropdown(profile.default.digital), "ENABLE_PIN")
+      .appendField("D4 PIN#")
+      .appendField(new Blockly.FieldDropdown(profile.default.digital), "D4_PIN")
+      .appendField("D5 PIN#")
+      .appendField(new Blockly.FieldDropdown(profile.default.digital), "D5_PIN")
+      .appendField("D6 PIN#")
+      .appendField(new Blockly.FieldDropdown(profile.default.digital), "D6_PIN")
+      .appendField("D7 PIN#")
+      .appendField(new Blockly.FieldDropdown(profile.default.digital), "D7_PIN")
+    this.appendValueInput("CURSOR_COLUMN#", 'Number')
+        .setCheck('Number')
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField("Column (0-15)");
+    this.appendValueInput("CURSOR_ROW#", 'Number')
+        .setCheck('Number')
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField("Row (0-1)");
+    this.appendValueInput("STRINGOUTPUT", String)
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField("Text:");
+    this.setPreviousStatement(true,null);
+    this.setNextStatement(true,null);
+    this.setTooltip('Prints text to the LCD');
+  }
+};
+
+Blockly.Blocks['lcd_clear'] = {
+  init: function() {
+    this.setColour(257);
+    this.appendDummyInput("")
+      .appendField("LCD Clear")
+    this.setPreviousStatement(true,null);
+    this.setNextStatement(true,null);
+    this.setTooltip('Clears text from the lcd');
+  }
+};
+
