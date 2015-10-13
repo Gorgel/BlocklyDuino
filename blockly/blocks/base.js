@@ -63,6 +63,22 @@ Blockly.Blocks['base_map'] = {
   }
 };
 
+Blockly.Blocks['random'] = {
+  helpUrl: 'http://arduino.cc/en/Reference/random',
+  init: function() {
+    this.setColour(230);
+    this.appendValueInput("RAND_MIN#", 'Number')
+        .appendField("Random# between")
+        .setCheck('Number');
+    this.appendValueInput("RAND_MAX#", 'Number')
+        .appendField("and")
+        .setCheck('Number');
+    this.setInputsInline(true);
+    this.setOutput(true);
+    this.setTooltip('Generates a random number between MIN and MAX');
+  }
+}
+
 Blockly.Blocks['inout_buildin_led'] = {
    helpUrl: 'http://arduino.cc/en/Reference/DigitalWrite',
    init: function() {

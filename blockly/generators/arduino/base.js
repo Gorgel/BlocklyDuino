@@ -41,6 +41,13 @@ Blockly.Arduino.base_map = function() {
   return [code, Blockly.Arduino.ORDER_NONE];
 };
 
+Blockly.Arduino['random'] = function() {
+  var rand_min = Blockly.Arduino.valueToCode(this, 'RAND_MIN#', Blockly.Arduino.ORDER_NONE);
+  var rand_max = Blockly.Arduino.valueToCode(this, 'RAND_MAX#', Blockly.Arduino.ORDER_ATOMIC);
+  var code = 'random(' + rand_min + ' , ' + rand_max + ')';
+  return [code, Blockly.Arduino.ORDER_NONE];
+};
+
 Blockly.Arduino.inout_buildin_led = function() {
   var dropdown_stat = this.getFieldValue('STAT');
   Blockly.Arduino.setups_['setup_output_13'] = 'pinMode(13, OUTPUT);';
