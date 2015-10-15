@@ -37,6 +37,8 @@ Blockly.Arduino.controls_for = function() {
   var argument1 = Blockly.Arduino.valueToCode(this, 'TO',
       Blockly.Arduino.ORDER_ASSIGNMENT) || '0';
   var branch = Blockly.Arduino.statementToCode(this, 'DO');
+  var step = Blockly.Arduino.valueToCode(this, 'BY',
+      Blockly.Arduino.ORDER_ASSIGNMENT) || '0';
   if (Blockly.Arduino.INFINITE_LOOP_TRAP) {
     branch = Blockly.Arduino.INFINITE_LOOP_TRAP.replace(/%1/g,
         '\'' + this.id + '\'') + branch;
@@ -48,7 +50,7 @@ Blockly.Arduino.controls_for = function() {
     var up = parseFloat(argument0) <= parseFloat(argument1);
     code = 'for (' + variable0 + ' = ' + argument0 + '; ' +
         variable0 + (up ? ' <= ' : ' >= ') + argument1 + '; ' +
-        variable0 + (up ? '++' : '--') + ') {\n' +
+        variable0 + (up ? '=' + variable0 + '+' + step : '=' + variable0 + '-' + step +'') + ') {\n' +
         branch + '}\n';
   } else {
     code = '';
