@@ -283,7 +283,7 @@ Blockly.Arduino.grove_ultrasonic_ranger = function() {
     code = 'ultrasonic_'+dropdown_pin+'.MeasureInCentimeters();';
   } else {
     Blockly.Arduino.setups_['setup_ultrasonic_'+dropdown_pin] = 'ultrasonic_'+dropdown_pin+'.MeasureInInches();';
-    code = 'ultrasonic_'+dropdown_pin+'.RangeInInches();';
+    code = 'ultrasonic_'+dropdown_pin+'.MeasureInInches();';
   }
   return [code, Blockly.Arduino.ORDER_ATOMIC];
 };

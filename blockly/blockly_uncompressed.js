@@ -1497,7 +1497,7 @@ goog.addDependency("async/throttle.js", ['goog.Throttle', 'goog.async.Throttle']
 goog.addDependency("async/freelist_test.js", ['goog.async.FreeListTest'], ['goog.async.FreeList', 'goog.testing.jsunit']);
 goog.addDependency("async/run.js", ['goog.async.run'], ['goog.async.WorkQueue', 'goog.async.nextTick', 'goog.async.throwException']);
 goog.addDependency("async/freelist.js", ['goog.async.FreeList'], []);
-goog.addDependency("async/animationdelay_test.js", [], ['goog.Timer', 'goog.async.AnimationDelay', 'goog.testing.PropertyReplacer', 'goog.testing.jsunit', 'goog.testing.recordFunction']);
+goog.addDependency("async/animationdelay_test.js", [], []);
 goog.addDependency("async/debouncer.js", ['goog.async.Debouncer'], ['goog.Disposable', 'goog.Timer']);
 goog.addDependency("structs/avltree.js", ['goog.structs.AvlTree', 'goog.structs.AvlTree.Node'], ['goog.structs.Collection']);
 goog.addDependency("structs/trie.js", ['goog.structs.Trie'], ['goog.object', 'goog.structs']);
